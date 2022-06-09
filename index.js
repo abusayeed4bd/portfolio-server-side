@@ -20,7 +20,13 @@ async function run() {
     try {
 
         await client.connect();
-        console.log('connected');
+        const projectCollection = client.db('portfolio').collection('projects');
+
+        app.get('/projects', async (req, res) => {
+            const q = req.query;
+            const projects = await projectCollection.find(q).toArray();
+            res.send(projects);
+        })
 
 
 
